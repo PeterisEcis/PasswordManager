@@ -20,7 +20,6 @@ class Schema:
         );
         """
         self.conn.execute(query)
-        print("ManagerTable created")
 
 class ManagerModel:
     TABLENAME = "Manager"
@@ -49,12 +48,6 @@ class ManagerModel:
         query = f"SELECT * FROM {self.TABLENAME}" + where_clause
         print (query)
         result_set = self.conn.execute(query).fetchall()
-        #print(result_set)
-        
-        #result = [{column: row[i]
-        #           for i, column in enumerate(result_set[0].keys())}
-        #            for row in result_set]
-
         return result_set
     
     #Delete items
@@ -71,5 +64,9 @@ class ManagerModel:
         query = f"DELETE from {self.TABLENAME}"
         self.conn.execute(query)
 
-    #TODO:    
+
     #Edit item
+    def update(self, item_id, params):
+        query = f"UPDATE {self.TABLENAME} SET {params[0]} = '{params[1]}' WHERE id = {item_id}"
+        self.conn.execute(query)
+
