@@ -46,7 +46,6 @@ class ManagerModel:
 
     def list_items(self, where_clause = ""):
         query = f"SELECT * FROM {self.TABLENAME}" + where_clause
-        print (query)
         result_set = self.conn.execute(query).fetchall()
         return result_set
     
@@ -54,7 +53,6 @@ class ManagerModel:
     def delete(self, item_id):
         query = f"DELETE FROM {self.TABLENAME} "\
                 f"WHERE id = {item_id}"
-        print(query)
         self.conn.execute(query)
         return self.list_items()
 

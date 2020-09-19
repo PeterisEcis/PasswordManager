@@ -4,10 +4,10 @@ import os
 
 def main(password):
     os.system("cls")
-    ManagerService().printAll()
-    items = ManagerService().listItems()
-    print(items)
+    MS = ManagerService()
+    MS.printAll()
 
+    print("")
     print("Choose your action: ")
     print("1 - add item")
     print("2 - delete item")
@@ -16,13 +16,13 @@ def main(password):
     print("Press q to quit")
     choice = input()
     if choice == '1':
-        ManagerService().add()
+        MS.add()
     if choice == '2':
-        ManagerService().delete()
+        MS.delete()
     if choice == '3':
-        ManagerService().update()
+        MS.update()
     if choice == '4':
-        ManagerService().clear()
+        MS.clear()
     if choice == 'q' or choice == 'Q':
         return False
     return True
