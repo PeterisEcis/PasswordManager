@@ -78,6 +78,8 @@ class ManagerService:
                 item = response[i]
                 id = item[0]
                 App = self.crypto.DecryptString(item[1])
+                if App == False:
+                    return False
                 Username = self.crypto.DecryptString(item[2])
                 Password = self.crypto.DecryptString(item[3])
                 Comment = self.crypto.DecryptString(item[4])

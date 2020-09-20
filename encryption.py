@@ -35,8 +35,12 @@ class Crypto:
         return encrypted.decode(self.encoding)
     
     def DecryptString(self, encrypted):
-        decrypted = self.token.decrypt(encrypted.encode(self.encoding))
-        return decrypted.decode(self.encoding)
+        try:
+            decrypted = self.token.decrypt(encrypted.encode(self.encoding))
+            return decrypted.decode(self.encoding)
+        except:
+            print("Wrong password!")
+            return False
 
     #TODO: Incorrect key error handling
 

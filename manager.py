@@ -5,7 +5,8 @@ import os
 def main(password):
     os.system("cls")
     MS = ManagerService(password)
-    MS.printAll()
+    if MS.printAll() == False:
+        return False
 
     print("")
     print("Choose your action: ")
