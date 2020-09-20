@@ -60,7 +60,7 @@ class ManagerService:
 
         value = input(f"Enter new {column} value: ")
         encrypted_value = self.crypto.EncryptString(value)
-        params = [column, value]    
+        params = [column, encrypted_value]    
         return self.model.update(item_id, params)
     
     def printAll(self):
