@@ -1,23 +1,22 @@
 from models import ManagerModel
+from encryption import Crypto
 
 class ManagerService:
-    def __init__(self):
+    def __init__(self, password):
+        self.crypto = Crypto(password)
         self.model = ManagerModel()
     
     def add(self):
-        App = input("App/Webpage name: ")
-        Username = input("Username: ")
-        Password = input("Password: ")
-        Comments = input("Comments: ")
+        App = self.crypto.EncryptString(input("App/Webpage name: "))
+        Username = self.crypto.EncryptString(input("Username: "))
+        Password = self.crypto.EncryptString(input("Password: "))
+        Comments = self.crypto.EncryptString(input("Comments: "))
         params = {"App": App, "Username": Username, \
             "Password": Password, "Comments": Comments}
 
         return self.model.add(params)
     
     def delete(self):
-        #TODO:
-        #showAll(listItems())
-        print("\n")
         item_id = input("Input id to delete item: ")
         return self.model.delete(item_id)
     
@@ -29,9 +28,6 @@ class ManagerService:
     
     def clear(self):
         return self.model.clear()
-
-    def ShowAll():
-        pass
 
     #TODO
     def update(self):
@@ -63,6 +59,7 @@ class ManagerService:
                 print("Wrong input")
 
         value = input(f"Enter new {column} value: ")
+        encrypted_value = self.crypto.EncryptString(value)
         params = [column, value]    
         return self.model.update(item_id, params)
     
@@ -80,9 +77,9 @@ class ManagerService:
             if i < len(response):
                 item = response[i]
                 id = item[0]
-                App = item[1]
-                Username = item[2]
-                Password = item[3]
-                Comment = item[4]
+                App = self.crypto.DecryptString(item[1])
+                Username = self.crypto.DecryptString(item[2])
+                Password = self.crypto.DecryptString(item[3])
+                Comment = self.crypto.DecryptString(item[4])
 
             

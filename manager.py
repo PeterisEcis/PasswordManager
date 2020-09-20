@@ -4,7 +4,7 @@ import os
 
 def main(password):
     os.system("cls")
-    MS = ManagerService()
+    MS = ManagerService(password)
     MS.printAll()
 
     print("")

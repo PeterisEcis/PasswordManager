@@ -2,36 +2,41 @@ import base64
 import os
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.fernet import fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.fernet import Fernet
 
 class Crypto:
     def __init__(self, password):
+        self.encoding = 'utf-8'
         self.key = self.GenerateKey(password)
+        self.token = Fernet(self.key)
 
     def GenerateKey(self, password):
         # change salt when using
-        salt = b'\xcfz@\xf5\x9f\xcam\x8bu\x99=\x02\xd1Y\xa0\xa6'
+        password = password.encode()
+        salt = b'_salt'
         kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(),
-        length = 32,
-        salt = salt,
-        iterations=100000,
-        backend = default_backend()
-    )
-    key = base64.urlsafe_b64encode(kdf.derive(password))
-    return key
+            algorithm=hashes.SHA256(),
+            length = 32,
+            salt = salt,
+            iterations=100000,
+            backend = default_backend()
+        )
+        key = base64.urlsafe_b64encode(kdf.derive(password))
+        return key
+    
+    def get_key(self, password):
+        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+        digest.update(password.encode(self.encoding))
+        return base64.urlsafe_b64encode(digest.finalize())
 
     def EncryptString(self, message):
-        encoded = message.encode()
-        f = Fernet(self.key)
-        encrypted - f.encrypt(encoded)
-        return encrypted
+        encrypted = self.token.encrypt(message.encode(self.encoding))
+        return encrypted.decode(self.encoding)
     
     def DecryptString(self, encrypted):
-        f = Fernet(self.key)
-        decrypted = f.decrypt(encrypted)
-        message = decrypted.decode()
-        return message
+        decrypted = self.token.decrypt(encrypted.encode(self.encoding))
+        return decrypted.decode(self.encoding)
 
     #TODO: Incorrect key error handling
 
