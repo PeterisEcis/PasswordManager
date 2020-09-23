@@ -14,7 +14,8 @@ class Crypto:
     def GenerateKey(self, password):
         # change salt when using
         password = password.encode()
-        salt = b'_salt'
+        #salt = b'_salt'
+        salt = b'\x19H\xbc\x9fTg\x91\x1a\xf5\xda^|\t\x92\x18\xc4\xe2Ox\xfc\xa7 U4\x17\xf5\xe1\x977\x0bvB'
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length = 32,

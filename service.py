@@ -71,9 +71,9 @@ class ManagerService:
         Password = "Password"
         Comment = "Comments"
         for i in range(len(response)+1):
-            print(str(id).ljust(5) + App.ljust(25) + Username.ljust(20) + Password.ljust(18) + Comment)
+            print(str(id).ljust(5) + App.ljust(25) + Username.ljust(25) + Password.ljust(25) + Comment)
             if i == 0:
-                print("==========================================================================================")
+                print("====================================================================================================")
             if i < len(response):
                 item = response[i]
                 id = item[0]
